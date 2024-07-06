@@ -37,6 +37,7 @@ class DoublyLinkedList {
         }else{
             this.tail = poppedNode.prev
             this.tail.next = null
+            poppedNode.prev = null;
         }
             this.length--
             return poppedNode
@@ -105,15 +106,16 @@ class DoublyLinkedList {
 
     insert(index, val){
         if(index < 0 || index > this.length) return false
-        if(index === 0) return !!this.unshift(val)
+        if(index === 0) return this.unshift(val)
 
-        if(index === this.length) return !!this.push(val)
+        if(index === this.length) return this.push(val)
         let newNode = new Node(val)
         let beforeNode = this.get(index - 1)
         let afterNode = beforeNode.next
         beforeNode.next = newNode
         newNode.prev = beforeNode
         afterNode.prev = newNode
+        newNode.next = afterNode
         this.length++
     }
 
@@ -135,11 +137,16 @@ class DoublyLinkedList {
         if(this.head === null) return null
         let current = this.head
         let arr = []
+        let result = "";
         while(current){
             arr.push(current)
+            result += current.val + "<-->";
             current = current.next
+            
         }
-        console.log(arr)
+        result += "null"
+        console.log(result)
+       // console.log(arr)
     }
 }
 
@@ -147,26 +154,25 @@ class DoublyLinkedList {
 
 var list = new DoublyLinkedList()
 
-list.push("Vivek")
-list.push("Gupta")
-list.push("Prinsu")
-list.unshift("Sushila")
-list.push("Mona")
-list.push("Nidhi")
-list.push("Kshama")
-// list.shift()
 
-// list.traverse()
-// console.log(`********************************************************`)
-// let getIndexElement = list.get(1)
-// console.log(getIndexElement)
-// console.log(`********************************************************`)
 
-// let setIndexElement = list.insert(1, "shonaa")
-// // console.log(setIndexElement)
-// list.traverse()
+list.push(10);
+list.push(20);
+list.push(30);
+list.push(40);
+list.push(50);
+list.push(60);
 
-list.remove(2)
+list.traverse()
 
-console.log(`********************************************************`)
+console.log(list.get(3).val)
+
+list.insert(3, 35)
+list.traverse()
+
+console.log("After Updating the value ")
+list.set(3, 38)
+list.traverse()
+
+list.remove(3)
 list.traverse()

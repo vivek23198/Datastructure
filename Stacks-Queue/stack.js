@@ -29,15 +29,18 @@ class Stack{
     print(){
         let arr = []
         let current = this.first
+        let result = "";
         if(!current){
             return undefined
         }else{
             // arr.push(current)
             while(current){
                 arr.push(current)
+                result += current.value + "-->"
                 current = current.next 
             }
-            console.log(arr)
+            console.log(result)
+            //console.log(arr)
         }
         
     }
@@ -57,15 +60,15 @@ class Stack{
 var stack = new Stack()
 
 stack.push("Vivek")
-stack.push("Gupta")
 stack.push("Vipul")
+stack.push("Vipin")
 stack.print()
 console.log(`***************************************`)
 
 
 stack.pop()
 
-
+console.log("After Performing Pop operation")
 stack.print()
 
 

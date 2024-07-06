@@ -13,7 +13,7 @@ class SinglyLinkedList{
         this.length = 0
     }
 
-    push(val){
+     push(val){
         var newNode = new Node(val)
         if(this.head === null){
             this.head = newNode
@@ -28,7 +28,7 @@ class SinglyLinkedList{
         }
     }
 
-    pop(){
+    pop(){ 
         if(!this.head){
             return `No Nodes are present in the Lists`
         }else if(this.head === this.tail){
@@ -37,7 +37,7 @@ class SinglyLinkedList{
         }
         else{
             let current = this.head
-            while(current.next !== this.tail){
+            while(current.next !== this.tail){ 
                 current = current.next
             }
             this.tail = current
@@ -64,12 +64,13 @@ class SinglyLinkedList{
 
     shift(){
         if(!this.head) return undefined
-        var currentHead = this.head
+        let currentHead = this.head
         this.head = currentHead.next
         this.length--
         if(this.length === 0){
             this.tail = null
         }
+        currentHead.next = null;
         return currentHead
     }
     get(index){
@@ -79,11 +80,12 @@ class SinglyLinkedList{
             return null
         }else{
             while(idx !== index){
-                console.log(current.value)
+                //console.log(current.value)
                 current = current.next
                 idx++
                
             }
+            console.log("Element at index "+idx+" is "+current.value)
             return current
         }
     }
@@ -120,27 +122,70 @@ class SinglyLinkedList{
         var previousNode = this.get(index - 1)
         var removed = previousNode.next
         previousNode.next = removed.next
+        removed.next = null
         this.length--
         return removed
     }
 
     reverse(){
-        var node = this.head
-        this.head = this.tail
-        this.tail = node
-        var next
-        var prev = null
-        for(var i=0; i< this.length; i++){
-            next = node.next
-            node.next = prev
-            prev = node
-            node = next
+
+        if(this.head == null || this.head.next === null){
+            return;
         }
-        return this
+
+        let prevNode = null;
+        let  currNode = this.head;
+        while(currNode !== null) {
+            let nextNode = currNode.next;
+            currNode.next = prevNode;
+
+
+            // Update
+            prevNode = currNode;
+            currNode = nextNode;
+        }
+
+        //this.head.next = null;
+        this.head = prevNode;
+
+        return this;
+
+    }
+
+    reverseLLUsingRecursion( prev,  curr) {
+        if(curr === null){
+            this.head = prev;
+            return prev;
+        }
+
+        let nextNode = curr.  next;
+        curr.next = prev;
+        prev=curr;
+        curr=nextNode;
+
+        return this.reverseLLUsingRecursion(prev, curr);
+
+    }
+
+
+    getMiddleNode(){
+        let slow = this.head;
+        let fast = this.head;
+
+        while(fast != null){
+            fast = fast.next;
+            if(fast != null){
+                fast = fast.next;
+                slow = slow.next;
+            }
+        }
+
+        console.log("Middle Node is :: ",slow.value);
     }
 
 
     print(){
+        let result = ""
         let arr = []
         let current = this.head
         if(!current){
@@ -149,24 +194,65 @@ class SinglyLinkedList{
             // arr.push(current)
             while(current){
                 arr.push(current)
+                result += current.value + " -> ";
                 current = current.next 
             }
-            console.log(arr)
+
+            result += "null";
+            console.log(result)
+            console.log("**************************************")
+           // console.log(arr)
         }
         
     }
 }
 
 var list = new SinglyLinkedList()
-list.push("Hello")
-list.push("Hello")
-list.push("Hello")
-list.push("Hello")
-list.unShift("Vivek")
-list.unShift("Gupta")
-// list.unShift("Gupta")
+
+list.push(10)
+list.push(20)
+list.push(30)
+list.push(40)
+list.push(50)
 
 list.print()
+//list.getMiddleNode()
+
+// list.shift()
+
+// list.print();
+
+// list.pop();
+// list.print();
+
+// list.unShift(10);
+// list.print();
+
+//list.get(1)
+
+
+// list.set(50, 2)
+// list.print()
+
+// list.insert(2, 30)
+// list.print()
+// list.insert(3, 40);
+// list.print()
+
+// list.remove(2);
+// list.print()
+
+// list.reverse();
+// list.print();
+// list.push("Hello")
+// list.push("Hello");
+// list.push("Hello")
+// list.push("Hello")
+// list.unShift("Vivek")
+// list.unShift("Gupta")
+// // list.unShift("Gupta")
+
+// list.print()
 // list.pop()
 // console.log(`**********************************************`)
 // list.print()
@@ -180,14 +266,19 @@ list.print()
 // console.log(`***********************************************`)
 // list.print()
 
-console.log(`*****************************************`)
-list.insert(1, "Vipul")
-list.print()
+// console.log(`*****************************************`)
+// list.insert(1, "Vipul")
+// list.print()
 
-console.log(`*****************************************`)
-list.remove(4)
-list.print()
+// console.log(`*****************************************`)
+// list.remove(4)
+// list.print()
 
-console.log(`*****************************************`)
-list.reverse()
+// console.log(`*****************************************`)
+//  list.reverse()
+//  list.print()
+let prev = null;
+let curr = list.head;
+list.reverseLLUsingRecursion(prev, curr)
+console.log("After Reversal of LinkedList");
 list.print()
